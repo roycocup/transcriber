@@ -1,0 +1,21 @@
+
+
+File Upload to Cloud: 
+    ✔ basic infrastructure @done(21-01-24 18:00)
+    ☐ middle ground for file upload
+        ☐ file analysis and validation
+    ☐ UI for upload and feedback
+
+Basic UI:
+    ☐ website for file upload, feedback and results
+
+
+Speech recognition:
+    ☐ Basic mechanism json payload
+    ☐ observe results
+    ☐ publish result
+
+Persistence:
+    ☐ basic persistence for file and results
+    
+
