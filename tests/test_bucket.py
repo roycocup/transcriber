@@ -30,7 +30,9 @@ class TestBucket(unittest.TestCase):
         res1 = self.sut.create_bucket(bucket_name)
         res2 = self.sut.delete_bucket(bucket_name)
     
-        self.assertIsNotNone(res1)
+        import google.cloud.storage.bucket as b
+
+        self.assertIsInstance(res1, b.Bucket)
         self.assertEqual(res2, None)
         
     def test_list_has_bucket_objects(self):
