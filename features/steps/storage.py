@@ -12,7 +12,10 @@ def step_impl(context):
 
 @when(u'when we create a bucket named "{bucket_name}"')
 def step_impl(context, bucket_name):
-    sut.create_bucket(bucket_name)
+    try:
+        sut.create_bucket(bucket_name)
+    except Exception as error:
+        print("Bucket probably already exists - ", error)
     
 
 @then(u'the bucket "{bucket_name}" exists')
