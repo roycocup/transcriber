@@ -1,4 +1,6 @@
 
+General:
+    ☐ Switch integration tests to BDD framework
 
 File Upload to Cloud: 
     ✔ basic infrastructure @done(21-01-24 18:00)
