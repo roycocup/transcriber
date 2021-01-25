@@ -28,7 +28,6 @@ def find_bucket(bucket_name):
     return False
 
 
-
 @given(u'we have a bucket named "{bucket_name}"')
 def step_impl(context, bucket_name):
     sut.create_bucket(bucket_name)
@@ -44,3 +43,7 @@ def step_impl(context,bucket_name):
     if find_bucket(bucket_name):
         raise Exception(f'bucket {bucket_name} still exists') 
     
+@given(u'the bucket "{bucket_name}" does not exist')
+def step_impl(context, bucket_name):
+    if find_bucket(bucket_name):
+        raise Exception(f'bucket {bucket_name} still exists') 
