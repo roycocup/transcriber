@@ -6,6 +6,6 @@ Feature: Files can be created, updated and deleted from storage
         Then the file "test-file.mp3" exists on "test-transcriber-rodderscode-co-uk"
 
     Scenario: We can delete existing file
-        Given we upload a file named "test-file.mp3" exists in "test-transcriber-rodderscode-co-uk"
+        Given we have a file named "test-file.mp3" exists in "test-transcriber-rodderscode-co-uk"
         When we delete the file named "test-file.mp3" in "test-transcriber-rodderscode-co-uk"
         Then the file "test-file.mp3" does not exist on "test-transcriber-rodderscode-co-uk"

@@ -89,7 +89,7 @@ def step_impl(context, file_name, bucket_name):
 
 
 
-@given(u'we upload a file named "{file_name}" exists in "{bucket_name}"')
+@given(u'we have a file named "{file_name}" exists in "{bucket_name}"')
 def step_impl(context, file_name, bucket_name):
     _create_test_bucket(bucket_name)
     _create_test_file(file_name)
