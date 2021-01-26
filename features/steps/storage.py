@@ -9,11 +9,16 @@ sut = bucket.Bucket()
 def step_impl(context):
     assert(sut is not None)
     
+def _create_test_bucket(bucket_name):
+    sut.create_bucket(bucket_name)
+
+def _delete_test_bucket(bucket_name):
+    sut.delete_bucket(bucket_name)
 
 @when(u'when we create a bucket named "{bucket_name}"')
 def step_impl(context, bucket_name):
     try:
-        sut.create_bucket(bucket_name)
+        _create_test_bucket(bucket_name)
     except Exception as error:
         print("Bucket probably already exists - ", error)
     
@@ -22,7 +27,7 @@ def step_impl(context, bucket_name):
 def step_impl(context, bucket_name):
     if not find_bucket(bucket_name): 
         raise Exception(u'Bucket {bucket_name} not found')
-    sut.delete_bucket(bucket_name)
+    _delete_test_bucket(bucket_name)
 
 
 def find_bucket(bucket_name):
@@ -36,14 +41,14 @@ def find_bucket(bucket_name):
 @given(u'we have a bucket named "{bucket_name}"')
 def step_impl(context, bucket_name):
     try:
-        sut.create_bucket(bucket_name)
+        _create_test_bucket(bucket_name)
     except:
         pass
 
 
 @when(u'we delete the bucket named "{bucket_name}"')
 def step_impl(context, bucket_name):
-    sut.delete_bucket(bucket_name)
+    _delete_test_bucket(bucket_name)
 
 
 @then(u'the bucket "{bucket_name}" does not exist')
@@ -84,25 +89,27 @@ def step_impl(context, file_name, bucket_name):
 
 
 
-@given(u'we upload a file named "{file_name}" exists in "{bucket_name}')
+@given(u'we upload a file named "{file_name}" exists in "{bucket_name}"')
 def step_impl(context, file_name, bucket_name):
+    _create_test_bucket(bucket_name)
     _create_test_file(file_name)
     gfile = gfiles.GFiles(bucket_name)
     gfile.upload(file_name)
 
 
-@when(u'we delete the file named "{file_name}" in "{bucket_name}')
+@when(u'we delete the file named "{file_name}" in "{bucket_name}"')
 def step_impl(context, file_name, bucket_name):
     gfile = gfiles.GFiles(bucket_name)
     gfile.delete(file_name)
 
 
-@then(u'the file "{file_name}" does not exist on "{bucket_name}')
+@then(u'the file "{file_name}" does not exist on "{bucket_name}"')
 def step_impl(context, file_name, bucket_name):
     gfile = gfiles.GFiles(bucket_name)
+    gfile.delete()
     found = gfile.get_file_by_name(file_name)
     _delete_test_file(file_name)
-    sut.delete_bucket(bucket_name)
+    _delete_test_bucket(bucket_name)
     if found:
         raise FileExistsError("File should not exist in bucket but does")
 

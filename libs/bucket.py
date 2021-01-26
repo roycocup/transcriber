@@ -22,7 +22,7 @@ class Bucket:
                 files.append(bucket_url + "/" + blob.name)
         return files
 
-    def create_bucket(self, bucket_name=None):
+    def create_bucket(self, bucket_name):
         return self.client.create_bucket(bucket_name)
 
     def delete_bucket(self, bucket_name):

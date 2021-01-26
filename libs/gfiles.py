@@ -13,7 +13,9 @@ class GFiles:
         return bucket.blob(filename)
 
     def delete(self, filename):
-        pass
+        bucket = self._get_bucket()
+        blob = bucket.blob(filename)
+        blob.delete()
 
     def _get_bucket(self):
         client = storage.Client()
