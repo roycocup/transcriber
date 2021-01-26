@@ -35,7 +35,10 @@ def find_bucket(bucket_name):
 
 @given(u'we have a bucket named "{bucket_name}"')
 def step_impl(context, bucket_name):
-    sut.create_bucket(bucket_name)
+    try:
+        sut.create_bucket(bucket_name)
+    except:
+        pass
 
 
 @when(u'we delete the bucket named "{bucket_name}"')
