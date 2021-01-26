@@ -1,7 +1,11 @@
 from tests.base import Base
-from google.cloud import storage
+from libs.speech import Speech
 
 class TestSpeech(Base):
 
-    def test_can_send_file_to_decode(self):
-        pass
+    def setUp(self):
+        self.sut = Speech()
+
+    def test_instantiates(self):
+        self.assertTrue(True)
+        
