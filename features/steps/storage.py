@@ -106,7 +106,7 @@ def step_impl(context, file_name, bucket_name):
 @then(u'the file "{file_name}" does not exist on "{bucket_name}"')
 def step_impl(context, file_name, bucket_name):
     gfile = gfiles.GFiles(bucket_name)
-    gfile.delete()
+    gfile.delete(file_name)
     found = gfile.get_file_by_name(file_name)
     _delete_test_file(file_name)
     _delete_test_bucket(bucket_name)
