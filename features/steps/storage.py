@@ -82,3 +82,27 @@ def step_impl(context, file_name, bucket_name):
     if not stored_file:
         raise Exception('File is not present')
 
+
+
+@given(u'we upload a file named "{file_name}" exists in "{bucket_name}')
+def step_impl(context, file_name, bucket_name):
+    _create_test_file(file_name)
+    gfile = gfiles.GFiles(bucket_name)
+    gfile.upload(file_name)
+
+
+@when(u'we delete the file named "{file_name}" in "{bucket_name}')
+def step_impl(context, file_name, bucket_name):
+    gfile = gfiles.GFiles(bucket_name)
+    gfile.delete(file_name)
+
+
+@then(u'the file "{file_name}" does not exist on "{bucket_name}')
+def step_impl(context, file_name, bucket_name):
+    gfile = gfiles.GFiles(bucket_name)
+    found = gfile.get_file_by_name(file_name)
+    _delete_test_file(file_name)
+    sut.delete_bucket(bucket_name)
+    if found:
+        raise FileExistsError("File should not exist in bucket but does")
+
