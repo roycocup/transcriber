@@ -8,4 +8,7 @@ class TestSpeech(Base):
 
     def test_instantiates(self):
         self.assertTrue(True)
+    
+    def test_request_transcription(self):
+        raise NotImplementedError("Method is not implemented yet")
         

@@ -9,6 +9,19 @@ sut = speech.Speech()
 test_filename = 'test.mp3'
 test_bucket_name = None
 
+test_config = {
+    "config": {
+        "encoding":"FLAC",
+        "sampleRateHertz": 16000,
+        "languageCode": "en-UK",
+        "enableWordTimeOffsets": "false"
+    },
+    "audio": {
+        "uri":"gs://cloud-samples-tests/speech/brooklyn.flac"
+    }
+}
+
+
 @given(u'we have a test file in "{bucket_name}"')
 def step_impl(context, bucket_name):
     test_bucket_name = bucket_name
@@ -19,7 +32,9 @@ def step_impl(context, bucket_name):
 
 @when(u'we ask for a transcription')
 def step_impl(context):
-    pass
+    ref = sut.request_transcription(test_config)
+    if ref is None:
+        raise Exception('ref is empty')
 
 
 @then(u'we get a transcription json')
