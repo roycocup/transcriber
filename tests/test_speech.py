@@ -1,7 +1,7 @@
 from tests.base import Base
 from libs.speech import Speech
-from google.cloud import speech as gspeech
-from unittest.mock import MagicMock
+from unittest import mock
+import json
 
 class TestSpeech(Base):
 
@@ -9,11 +9,27 @@ class TestSpeech(Base):
     #     self.sut = Speech()
         
     # https://docs.python.org/3/library/unittest.mock-examples.html
-    def test_request_transcription(self):
-        mocked = gspeech.SpeechClient()
-        mocked.recognize = MagicMock()
-        mocked.recognize.assert_called_once_with({})
-        sut = Speech(mocked)
-        sut.request_transcription(1)
-        # self.sut.request_transcription(configuration)
+    @mock.patch('libs.speech.sclient')
+    def test_request_transcription_returns_json_from_client(self, mock_speech):
+        sut = Speech()
+        mock_response_data = json.dumps({'this':'the response'})
+        mock_speech.recognize.return_value = mock_response_data
+        
+        actual = sut.request_transcription({})
+
+        mock_speech.recognize.assert_called_with({})
+        self.assertEquals(actual, mock_response_data)
+    
+    def test_request_function_takes_payload(self):
+        raise NotImplementedError()
+        # sut = Speech()
+        
+
+
+
+        
+
+
+
+        
         

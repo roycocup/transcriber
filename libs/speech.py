@@ -1,10 +1,9 @@
+from google.cloud import speech as sclient
 
 class Speech:
-    def __init__(self, speech_client):
-        self.speech_client = speech_client
     
-    def request_transcription(self):
-        self.speech_client.recognize(1)
+    def request_transcription(self, payload):
+        return sclient.recognize({})
 
 
 # # Instantiates a client
