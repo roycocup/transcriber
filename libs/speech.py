@@ -1,10 +1,10 @@
 from google.cloud import speech as sclient
+from google.cloud.speech import RecognitionAudio as reconAudio
 
 class Speech:
     
     def request_transcription(self, configuration):
         '''
-        * create the gs:// uri for the file based on payload
         * gets a RecognitionAudio or SpeechAsyncClient for google
         * makes configuration as payload to google
         * gets a sync or asyn response
@@ -34,5 +34,8 @@ class Speech:
         # response = client.recognize(config=config, audio=audio)
         # for result in response.results:
         #     print("Transcript: {}".format(result.alternatives[0].transcript))
-        return sclient.recognize({})
+
+        gcs_uri = configuration['audio']['uri']
+        audio = reconAudio(uri=gcs_uri)
+        return sclient.recognize(configuration=configuration, audio=audio)
 
