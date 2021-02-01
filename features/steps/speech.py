@@ -32,11 +32,14 @@ def step_impl(context, bucket_name):
 
 @when(u'we ask for a transcription')
 def step_impl(context):
-    ref = sut.request_transcription(test_config)
-    if ref is None:
-        raise Exception('ref is empty')
+    context.ref = sut.request_transcription(test_config)
 
 
 @then(u'we get a transcription json')
 def step_impl(context):
     delete_test_bucket(test_bucket_name)
+    if context.ref is None:
+        raise Exception('Nothing came back from google speech')
+    print(context.ref)
+
+    
