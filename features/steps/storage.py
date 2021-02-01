@@ -35,6 +35,7 @@ def find_bucket(bucket_name):
 
 @given(u'we have a bucket named "{bucket_name}"')
 def step_impl(context, bucket_name):
+    context.bucket_name = bucket_name
     try:
         create_test_bucket(bucket_name)
     except:
@@ -61,7 +62,7 @@ def step_impl(context, bucket_name):
 def step_impl(context, file_name, bucket_name):
     create_test_file(file_name)
     gfile = gfiles.GFiles(bucket_name)
-    gfile.upload(file_name)
+    context.response = gfile.upload(file_name)
 
 
 @then(u'the file "{file_name}" exists on "{bucket_name}"')
@@ -101,6 +102,11 @@ def step_impl(context, file_name, bucket_name):
     delete_test_bucket(bucket_name)
     
     
-    
-    
-
+@then(u'the uri for the file is "{uri}"')
+def step_impl(context, uri):
+    delete_test_bucket(context.bucket_name)
+    if context.response is None:
+        raise Exception("Response should not be empty")
+    link = "gs://" + context.response.bucket.name + "/" + context.response.name
+    if link != uri:
+        raise Exception("Expected " + uri + " but got " + link)

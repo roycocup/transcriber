@@ -2,7 +2,7 @@ from google.cloud import speech as sclient
 
 class Speech:
     
-    def request_transcription(self, payload):
+    def request_transcription(self, configuration):
         '''
         * create the gs:// uri for the file based on payload
         * gets a RecognitionAudio or SpeechAsyncClient for google

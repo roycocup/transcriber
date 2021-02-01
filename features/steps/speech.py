@@ -3,35 +3,37 @@ from features.steps.utils import *
 from libs import bucket
 from libs import gfiles
 from libs import speech
+from libs.uri_creator import UriCreator
 import os
 
 sut = speech.Speech()
 test_filename = 'test.mp3'
-test_bucket_name = None
 
 test_config = {
     "config": {
-        "encoding":"FLAC",
+        "encoding":"MP3",
         "sampleRateHertz": 16000,
         "languageCode": "en-UK",
         "enableWordTimeOffsets": "false"
     },
     "audio": {
-        "uri":"gs://cloud-samples-tests/speech/brooklyn.flac"
+        "uri": None
     }
 }
 
 
 @given(u'we have a test file in "{bucket_name}"')
 def step_impl(context, bucket_name):
-    test_bucket_name = bucket_name
-    create_test_bucket(test_bucket_name)
-    gfile = gfiles.GFiles(test_bucket_name)
+    context.bucket_name = bucket_name
+    create_test_bucket(bucket_name)
+    gfile = gfiles.GFiles(bucket_name)
     gfile.upload(test_filename)
+    
 
 
 @when(u'we ask for a transcription')
 def step_impl(context):
+    test_config['audio']['uri'] = UriCreator.get_uri(context.bucket_name, test_filename)
     context.ref = sut.request_transcription(test_config)
 
 
