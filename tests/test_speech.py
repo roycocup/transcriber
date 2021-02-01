@@ -20,9 +20,7 @@ class TestSpeech(Base):
         mock_speech.recognize.assert_called_with({})
         self.assertEquals(actual, mock_response_data)
     
-    def test_request_function_takes_payload(self):
-        raise NotImplementedError()
-        # sut = Speech()
+    
         
 
 

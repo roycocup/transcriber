@@ -40,6 +40,5 @@ def step_impl(context):
     delete_test_bucket(test_bucket_name)
     if context.ref is None:
         raise Exception('Nothing came back from google speech')
-    print(context.ref)
 
     
