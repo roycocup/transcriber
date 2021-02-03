@@ -5,6 +5,7 @@ from libs import gfiles
 from libs import speech
 from libs.uri_creator import UriCreator
 import os
+from google.cloud.speech import RecognitionAudio        
 
 sut = speech.Speech()
 test_filename = 'test.mp3'
@@ -34,7 +35,8 @@ def step_impl(context, bucket_name):
 @when(u'we ask for a transcription')
 def step_impl(context):
     test_config['audio']['uri'] = UriCreator.get_uri(context.bucket_name, test_filename)
-    context.ref = sut.request_transcription(test_config)
+    recon_audio = RecognitionAudio(uri=test_config['audio']['uri'])
+    context.ref = sut.request_transcription(configuration=test_config, recognition_audio=recon_audio)
 
 
 @then(u'we get a transcription json')

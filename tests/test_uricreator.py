@@ -7,4 +7,4 @@ class TestUriCreator(unittest.TestCase):
         file_name, bucket_name = "test.mp3", "rodrigo-test-bucket"
         actual = UriCreator.get_uri(file_name=file_name, bucket_name=bucket_name)
         expected = "gs://rodrigo-test-bucket/test.mp3"
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
