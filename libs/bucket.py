@@ -27,7 +27,7 @@ class Bucket:
 
     def delete_bucket(self, bucket_name):
         return self.client.bucket(bucket_name).delete(force=True)
-    
+
     # def delete_file_in_bucket(self, bucket_name, file_name):
     #     blob = bucket.blob(file_name)
     #     return blob.delete()

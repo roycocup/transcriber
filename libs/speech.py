@@ -1,15 +1,15 @@
 from google.cloud import speech as sclient
-# from google.cloud.speech import RecognitionAudio as reconAudio
+
 
 class Speech:
-    
+
     def request_transcription(self, configuration, recognition_audio):
         '''
         * gets a RecognitionAudio or SpeechAsyncClient for google
         * makes configuration as payload to google
         * gets a sync or asyn response
         * stores ref to asyn or stores respose as json
-        
+
         Payload to google should look like this
         {
             "config": {
@@ -23,7 +23,7 @@ class Speech:
             }
         }
         '''
-        
+
         # gcs_uri = "gs://cloud-samples-data/speech/brooklyn_bridge.raw"
         # audio = speech.RecognitionAudio(uri=gcs_uri)
         # config = speech.RecognitionConfig(
@@ -35,6 +35,7 @@ class Speech:
         # for result in response.results:
         #     print("Transcript: {}".format(result.alternatives[0].transcript))
 
+        response = sclient.SpeechClient().recognize(
+            config=configuration, audio=recognition_audio)
 
-        return sclient.recognize(configuration=configuration, audio=recognition_audio)
-
+        return response

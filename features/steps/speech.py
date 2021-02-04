@@ -5,7 +5,7 @@ from libs import gfiles
 from libs import speech
 from libs.uri_creator import UriCreator
 import os
-from google.cloud.speech import RecognitionAudio        
+from google.cloud.speech import RecognitionAudio, RecognitionConfig
 
 sut = speech.Speech()
 test_filename = 'test.mp3'
@@ -34,14 +34,21 @@ def step_impl(context, bucket_name):
 
 @when(u'we ask for a transcription')
 def step_impl(context):
-    test_config['audio']['uri'] = UriCreator.get_uri(context.bucket_name, test_filename)
-    recon_audio = RecognitionAudio(uri=test_config['audio']['uri'])
-    context.ref = sut.request_transcription(configuration=test_config, recognition_audio=recon_audio)
+    uri = UriCreator.get_uri(context.bucket_name, test_filename)
+    print(uri)
+    config = RecognitionConfig(
+        encoding=RecognitionConfig.AudioEncoding.OGG_OPUS,
+        sample_rate_hertz=16000,
+        language_code="en-US",
+    )
+
+    audio = RecognitionAudio(uri=uri)
+    context.ref = sut.request_transcription(configuration=config, recognition_audio=audio)
 
 
 @then(u'we get a transcription json')
 def step_impl(context):
-    delete_test_bucket(test_bucket_name)
+    delete_test_bucket(context.bucket_name)
     if context.ref is None:
         raise Exception('Nothing came back from google speech')
 
