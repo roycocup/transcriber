@@ -8,19 +8,7 @@ import os
 from google.cloud.speech import RecognitionAudio, RecognitionConfig
 
 sut = speech.Speech()
-test_filename = 'test.mp3'
-
-test_config = {
-    "config": {
-        "encoding":"MP3",
-        "sampleRateHertz": 16000,
-        "languageCode": "en-UK",
-        "enableWordTimeOffsets": "false"
-    },
-    "audio": {
-        "uri": None
-    }
-}
+test_filename = 'test.flac'
 
 
 @given(u'we have a test file in "{bucket_name}"')
@@ -35,11 +23,10 @@ def step_impl(context, bucket_name):
 @when(u'we ask for a transcription')
 def step_impl(context):
     uri = UriCreator.get_uri(context.bucket_name, test_filename)
-    print(uri)
     config = RecognitionConfig(
-        encoding=RecognitionConfig.AudioEncoding.OGG_OPUS,
-        sample_rate_hertz=16000,
-        language_code="en-US",
+        encoding=RecognitionConfig.AudioEncoding.FLAC,
+        language_code="en-UK",
+        audio_channel_count=2
     )
 
     audio = RecognitionAudio(uri=uri)
