@@ -5,6 +5,7 @@ RUN mkdir /opt/project
 WORKDIR /opt/project
 # COPY . .
 COPY requirements.txt /opt/project
+RUN apt update && apt install -y ffmpeg
 RUN python3 -m pip install -r requirements.txt
 CMD ["python", "main.py"]
 
