@@ -19,4 +19,6 @@ def step_impl(context, file_type):
 def step_impl(context, file_name):
     if not os.path.isfile(file_name):
         raise FileNotFoundError("File was not created")
+    else:
+        os.remove(file_name)
     

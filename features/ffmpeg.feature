@@ -4,7 +4,7 @@ Feature: Modify an audio file
     Scenario: modify a audio file from one type to another
         Given we have a test file named "test.mp3"
         When we run format command to type "flac"
-        Then we get a file named "test.flac"
+        Then we get a file named "test.mp3.flac"
     
     
     Scenario: modify the channels on a flac file 
