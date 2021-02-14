@@ -22,3 +22,16 @@ def step_impl(context, file_name):
     else:
         os.remove(file_name)
     
+@given(u'we have a file "test2.flac" with "2" channels')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Given we have a file "test2.flac" with "2" channels')
+
+
+@when(u'we run a format command to make channels "1"')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: When we run a format command to make channels "1"')
+
+
+@then(u'we have a file "test2.flac" with "1" channels')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then we have a file "test2.flac" with "1" channels')

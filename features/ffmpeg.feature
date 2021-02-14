@@ -1,6 +1,5 @@
 Feature: Modify an audio file
 
-    @wip
     Scenario: modify a audio file from one type to another
         Given we have a test file named "test.mp3"
         When we run format command to type "flac"
