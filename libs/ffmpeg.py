@@ -23,7 +23,7 @@ class Ffmpeg():
     
     def change_channels(self, file_name, audio_channels):
         tmp_file_name = f"tmp-{file_name}"
-        os.popen(f"ffmpeg -y -i {file_name} -ac {audio_channels} {tmp_file_name}")
+        subprocess.call(["ffmpeg", "-y","-i",file_name,"-ac",audio_channels, tmp_file_name])
         os.remove(file_name)
         shutil.move(src=tmp_file_name, dst=file_name)
     

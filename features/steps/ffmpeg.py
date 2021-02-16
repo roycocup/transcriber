@@ -34,16 +34,15 @@ def step_impl(context, file_name, num_channels):
 @when(u'we run a format command to make channels "{num_channels}"')
 def step_impl(context, num_channels):
     # make a duplicate file for testing
-    fake_file_name = f"fake-{context.file_name}"
-    shutil.copy(src=context.file_name, dst=fake_file_name)
-    af.Audioformatter(fake_file_name).change_channels(num_channels)
+    context.fake_file_name = "fake-"+context.file_name
+    shutil.copy(src=context.file_name, dst=context.fake_file_name)
+    af.Audioformatter(context.fake_file_name).change_channels(num_channels)
     
 
 
 @then(u'we have a file "{file_name}" with "{num_channels}" channels')
 def step_impl(context, file_name, num_channels):
-    # if not os.path.isfile(file_name): raise FileNotFoundError()
-    # res_num_channels = af.Audioformatter(file_name).probe_channels()
-    # os.remove(file_name)
-    # if res_num_channels != num_channels: raise Exception("Incorrect number of channels")
-    pass
+    if not os.path.isfile(context.fake_file_name): raise FileNotFoundError()
+    res_num_channels = af.Audioformatter(context.fake_file_name).probe_channels()
+    os.remove(context.fake_file_name)
+    if res_num_channels != num_channels: raise Exception("Incorrect number of channels")
