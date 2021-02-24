@@ -1,10 +1,17 @@
 import os
+import sys
+import hashlib
 from flask import *
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://flaskr.sqlite'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db = SQLAlchemy(app)
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -34,8 +41,16 @@ def create_app(test_config=None):
     def upload_file():
         if request.method == 'POST':
             f = request.files['dafile']
-            f.save('uploads/uploaded_file.txt')
+            saved = "/".join(['uploads', f.filename])
+            f.save(saved) 
+            upload_to_bucket(bucket_name='dev-test-rodderscode-co-uk', filename=saved)
         return redirect('/')
+
+    def upload_to_bucket(bucket_name, filename):
+        from libs.bucket import Bucket
+        from libs.gfiles import GFiles
+        Bucket().create_bucket(bucket_name)
+        GFiles(bucket_name).upload(filename)
 
 
     return app
@@ -43,4 +58,4 @@ def create_app(test_config=None):
 
 if __name__ == "__main__":
     app = create_app()
-    app.run()
+    app.run(debug=True)
