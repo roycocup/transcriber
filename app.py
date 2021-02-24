@@ -30,11 +30,12 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html')
 
-    @app.route('/upload', methods=['GET', 'POST'])
+    @app.route('/upload', methods=['POST'])
     def upload_file():
         if request.method == 'POST':
             f = request.files['dafile']
-            f.save('/tmp/uploaded_file.txt')
+            f.save('uploads/uploaded_file.txt')
+        return redirect('/')
 
 
     return app

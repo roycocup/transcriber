@@ -1,3 +1,6 @@
 *__pycache*
 venv*
 credentials.json
+!uploads/.gitkeep
+uploads/*
+
