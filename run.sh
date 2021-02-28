@@ -1,4 +1,1 @@
-export FLASK_ENV=development
-export FLASK_APP=transcriber
-# python app.py
-flask run
+python web/manage.py runserver 3000
