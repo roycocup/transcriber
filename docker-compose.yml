@@ -16,6 +16,10 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: root
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
 
   adminer:
     image: adminer
