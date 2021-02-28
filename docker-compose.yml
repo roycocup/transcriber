@@ -11,12 +11,14 @@ services:
     volumes:
       - .:/opt/project
   
-  db:                                                                         
-    image: mysql:5.7
-    environment:                                                            
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: transcriber
-    expose:                                                                 
-      - 3306                                                              
-    ports:                                                                  
-      - 3306:3306
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

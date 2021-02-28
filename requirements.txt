@@ -35,12 +35,14 @@ Mako==1.1.4
 MarkupSafe==1.1.1
 mccabe==0.6.1
 mypy-extensions==0.4.3
+mysqlclient==2.0.3
 packaging==20.8
 parse==1.19.0
 parse-type==0.5.2
 pluggy==0.13.1
 proto-plus==1.13.0
 protobuf==3.14.0
+psycopg2==2.8.6
 py==1.10.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
