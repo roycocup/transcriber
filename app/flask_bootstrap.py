@@ -5,7 +5,6 @@ from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
-
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -42,8 +41,13 @@ def create_app(test_config=None):
         if request.method == 'POST':
             f = request.files['dafile']
             saved = "/".join(['uploads', f.filename])
-            f.save(saved) 
-            upload_to_bucket(bucket_name='dev-test-rodderscode-co-uk', filename=saved)
+            f.save(saved)
+            # create entry in db about the new file bind it to new user
+            # daemon process file and create flac 1 channel
+            # upload_to_bucket(bucket_name='dev-test-rodderscode-co-uk', filename=saved)
+            # process in google and get token
+            # save token to db against file
+            # access page 
         return redirect('/')
 
     def upload_to_bucket(bucket_name, filename):
@@ -52,10 +56,4 @@ def create_app(test_config=None):
         Bucket().create_bucket(bucket_name)
         GFiles(bucket_name).upload(filename)
 
-
     return app
-
-
-if __name__ == "__main__":
-    app = create_app()
-    app.run(debug=True)
