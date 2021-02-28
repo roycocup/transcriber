@@ -56,4 +56,16 @@ def create_app(test_config=None):
         Bucket().create_bucket(bucket_name)
         GFiles(bucket_name).upload(filename)
 
+    # @app.teardown_appcontext
+    # def shutdown_session(exception=None):
+    #     db_session.remove()
+        
+    
     return app
+
+
+if __name__ == "__main__":
+    app = create_app()
+    # from app.db import * 
+    # db.init_db()
+    app.run(debug=True)
