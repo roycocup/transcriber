@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transcriber</title>
-</head>
-<body>
-    
-    <h2>Hello from home template</h2>
-</body>
-</html>
+{% extends 'transcriber/base.html' %}
+
+{% block content %}
+<article>
+    <section>
+        <title>This is the upload</title>
+        <form action="#" method="post" enctype="multipart/form-data">
+            <input type="file"/>
+        </form>
+    </section>
+</article>
+{% endblock content %}
