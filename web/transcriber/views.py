@@ -1,6 +1,22 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import *
+from django.http import *
+from .forms import UploadFileForm
 
-# Create your views here.
+
 def index(request):
-    return render(request, 'transcriber/home.html')
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(request.FILES)
+            return HttpResponseRedirect('/')
+    else:
+        form = UploadFileForm()
+    
+    return render(request, 'transcriber/home.html', {'form': form})
+    
+
+def handle_uploaded_file(_file):
+    name = _file['file'].name
+    with open(f'uploads/{name}', 'wb+') as destination:
+        for chunk in _file['file'].chunks():
+            destination.write(chunk)
