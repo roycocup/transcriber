@@ -6,6 +6,7 @@
         <title>This is the upload</title>
         <form action="{% url 'index' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            {{session}}
             <fieldset class="form-group">
                 <legend>Some file </legend>
                 {{form}}
