@@ -53,3 +53,11 @@ def _set_session(request):
 
 def _get_session(request):
     return request.session.get('user', None)
+
+
+def process(request):
+    uploads = Uploads.objects.all()
+    rows = len(uploads)
+    
+
+    return HttpResponse(f'processing {rows} rows\n')
