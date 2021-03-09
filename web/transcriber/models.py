@@ -5,6 +5,7 @@ from django.dispatch import receiver
 
 class Uploads(models.Model):
     filename = models.CharField(max_length=254)
+    hashed = models.CharField(max_length=50, unique=True)
     bucket = models.CharField(max_length=254)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.CharField(max_length=254)
