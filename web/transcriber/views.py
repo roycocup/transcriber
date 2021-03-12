@@ -7,6 +7,7 @@ from logging import *
 from django.contrib.auth.models import *
 from .forms import UploadFileForm
 from .models import *
+from libs.audioformatter import Audioformatter as af
 
 upload_folder = "uploads"
 
@@ -29,7 +30,7 @@ def index(request):
 def handle_uploaded_file(_file, request):
     name = _file['file'].name
         
-    user, created = User.objects.get_or_create(username='anonymous')
+    User.objects.get_or_create(username='anonymous')
     # User_Ext(user=user, session=_get_session(request))
     Uploads.objects.get_or_create(filename=name, user=user, hashed=_get_checksum(_file))
     
@@ -61,16 +62,12 @@ def process(request):
         file_name = os.path.join(upload_folder, upload.filename)
         size = os.path.getsize(file_name)
         ext = os.path.splitext(file_name)[1]
-        
-        from ..libs import audioformatter as af
-        return _debug(__name__)
+                
         formatter = af(file_name)
         if ext != '.flac':
-            return _debug('here')
-            formatter.format_to(file_name=file_name, file_type='flac')
-        return _debug('here2')
-        if formatter.probe_channels() > 1: 
-            formatter.change_channels(1)
+            formatter.format_to(file_type='flac')
+        if int(formatter.probe_channels()) > 1: 
+            formatter.change_channels(num_channels='1')
 
     return HttpResponse(f'processing {num_rows} rows\n')
 

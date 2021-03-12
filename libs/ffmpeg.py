@@ -7,7 +7,7 @@ class Ffmpeg():
     
     def format(self, file_name, format):
         new_file_name = f"{file_name}.{format}"
-        os.system(f"ffmpeg -i {file_name} {new_file_name}")
+        os.system(f"ffmpeg -y-i {file_name} {new_file_name}")
         return new_file_name
     
     def probe_channels(self, file_name):

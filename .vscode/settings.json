@@ -21,5 +21,7 @@
             "password": "root",
             "database": "transcriber"
         }
-    ]
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.banditEnabled": false
 }
