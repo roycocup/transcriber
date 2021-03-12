@@ -48,23 +48,29 @@ def _set_session(request):
 def _get_session(request):
     return request.session.get('user', None)
 
+
+def _debug(o):
+    import json
+    return HttpResponse(json.dumps(o))
+
 def process(request):
     uploads = Uploads.objects.all()
     num_rows = len(uploads)
     
-    for upload in uploads:
+    for upload in uploads:        
         file_name = os.path.join(upload_folder, upload.filename)
         size = os.path.getsize(file_name)
         ext = os.path.splitext(file_name)[1]
-        from libs.audioformatter import Audioformatter as af
-        formatter = af(file_name)
-        if ext != '.flac':
-            formatter.format_to(file_name=file_name, file_type='flac')
-        if formatter.probe_channels() > 1: 
-            formatter.change_channels(1)
+        return _debug('incomplete')
+        # from libs.audioformatter import Audioformatter as af
+        # formatter = af(file_name)
+        # if ext != '.flac':
+        #     return _debug('here')
+        #     formatter.format_to(file_name=file_name, file_type='flac')
+        # return _debug('here2')
+        # if formatter.probe_channels() > 1: 
+        #     formatter.change_channels(1)
 
-
-        
     return HttpResponse(f'processing {num_rows} rows\n')
 
 def _get_checksum(_file):
