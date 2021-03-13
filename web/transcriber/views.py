@@ -1,3 +1,7 @@
+"""
+Main views and logic file
+"""
+
 import os 
 from django.shortcuts import *
 from django.http import *
@@ -11,9 +15,17 @@ from libs.audioformatter import Audioformatter as af
 
 upload_folder = "uploads"
 
+"""
+###################
+Routes
+###################
+"""
+
 def index(request):
-    if not _get_session(request):
-        _set_session(request)
+    """
+    Handle the homepage
+    """
+    if not _get_session(request): _set_session(request)
     session_value = _get_session(request)
     
     if request.method == 'POST':
@@ -27,14 +39,43 @@ def index(request):
     return render(request, 'transcriber/home.html', {'form': form, 'session':session_value })
     
 
+def process(request):
+    """
+    Backend process handling
+    """
+    uploads = Uploads.objects.all()
+    num_rows = len(uploads)
+    
+    for upload in uploads:        
+        file_name = os.path.join(upload_folder, upload.filename)
+        size = os.path.getsize(file_name)
+        ext = os.path.splitext(file_name)[1]
+                
+        formatter = af(file_name)
+        if ext != '.flac':
+            formatter.format_to(file_type='flac')
+        if int(formatter.probe_channels()) > 1: 
+            formatter.change_channels(num_channels='1')
+
+    return HttpResponse(f'processing {num_rows} rows\n')
+
+
+"""
+###################
+Helpers
+###################
+"""
+
 def handle_uploaded_file(_file, request):
     name = _file['file'].name
-        
-    User.objects.get_or_create(username='anonymous')
+    user, _ = User.objects.get_or_create(username='anonymous')
     # User_Ext(user=user, session=_get_session(request))
     Uploads.objects.get_or_create(filename=name, user=user, hashed=_get_checksum(_file))
     
+    save_locally(name, _file)
 
+
+def save_locally(name, _file):
     with open(os.path.join(upload_folder, name), 'wb+') as destination:
         for chunk in _file['file'].chunks():
             destination.write(chunk)
@@ -53,23 +94,6 @@ def _get_session(request):
 def _debug(o):
     import json
     return HttpResponse(json.dumps(o))
-
-def process(request):
-    uploads = Uploads.objects.all()
-    num_rows = len(uploads)
-    
-    for upload in uploads:        
-        file_name = os.path.join(upload_folder, upload.filename)
-        size = os.path.getsize(file_name)
-        ext = os.path.splitext(file_name)[1]
-                
-        formatter = af(file_name)
-        if ext != '.flac':
-            formatter.format_to(file_type='flac')
-        if int(formatter.probe_channels()) > 1: 
-            formatter.change_channels(num_channels='1')
-
-    return HttpResponse(f'processing {num_rows} rows\n')
 
 def _get_checksum(_file):
     file_name = _file['file'].name
