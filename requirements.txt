@@ -43,7 +43,7 @@ parse==1.19.0
 parse-type==0.5.2
 pluggy==0.13.1
 proto-plus==1.13.0
-protobuf==3.14.0
+protobuf==3.18.3
 psycopg2==2.8.6
 py==1.10.0
 pyasn1==0.4.8
