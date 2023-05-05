@@ -1,5 +1,5 @@
 # FROM registry.avantiplc.net:8443/avanti/python36:dev 
-FROM python:3.6
+FROM python:3.10.11
 
 RUN mkdir /opt/project
 WORKDIR /opt/project
