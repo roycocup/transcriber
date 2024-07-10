@@ -71,4 +71,4 @@ typing-inspect==0.6.0
 urllib3==1.26.4
 Werkzeug==1.0.1
 wrapt==1.12.1
-zipp==3.4.0
+zipp==3.19.1
