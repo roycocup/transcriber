@@ -10,7 +10,7 @@ cffi==1.14.4
 chardet==4.0.0
 click==7.1.2
 dataclasses==0.8
-Django==3.1.7
+Django==4.2.20
 django-developer-panel==0.1.2
 Flask==1.1.2
 Flask-Migrate==2.7.0
@@ -30,7 +30,7 @@ importlib-metadata==3.4.0
 iniconfig==1.1.1
 isort==5.7.0
 itsdangerous==1.1.0
-Jinja2==2.11.3
+Jinja2==3.1.6
 lazy-object-proxy==1.4.3
 libcst==0.3.16
 Mako==1.1.4
